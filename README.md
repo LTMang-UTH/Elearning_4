@@ -34,15 +34,3 @@ npm run dev
 ![Blog List](./src/assets/images/demo1%20(3).png)
 
 
-### 8. Sample Images
-<table>
-  <tr>
-    <td><img src="./src/assets/images/photo-1544383835-bda2bc66a55d.jpg" alt="Sample 1" width="400"/></td>
-    <td><img src="./src/assets/images/photo-1558494949-ef010cbdcc31.jpg" alt="Sample 2" width="400"/></td>
-  </tr>
-  <tr>
-    <td><img src="./src/assets/images/photo-1579468118864-1b9ea3c0db9a.jpg" alt="Sample 3" width="400"/></td>
-    <td><img src="./src/assets/images/photo-1633356122544-f134324a6cee.jpg" alt="Sample 4" width="400"/></td>
-  </tr>
-</table>
-
