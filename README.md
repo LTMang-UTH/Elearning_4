@@ -23,14 +23,13 @@ npm run dev
 ![Trang chủ](./src/assets/images/demo1%20(1).png)
 ### 2. Đăng Ký
 ![Đăng ký](./src/assets/images/demo1%20(4).png)
-
-### 2. Trang người dùng sau khi đăng nhập
-![](./src/assets/images/demo1%20(2).png)
 ### 3. Đăng nhập
 ![Đăng nhập](./src/assets/images/demo1%20(6).png)
-### 4. Dashboard
+### 4. Trang người dùng sau khi đăng nhập
+![](./src/assets/images/demo1%20(2).png)
+### 5. Dashboard
 ![Dashboard](./src/assets/images/demo1%20(5).png)
-### 5. Blog List
+### 6. Blog List
 ![Blog List](./src/assets/images/demo1%20(3).png)
 
 
