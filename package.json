@@ -1,0 +1,37 @@
+{
+  "name": "vue3-blog-project",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Vue 3 Blog Application with Authentication",
+  "scripts": {
+    "postinstall": "cd backend && npm install",
+    "dev": "concurrently \"vite\" \"cd backend && npm start\"",
+    "dev:frontend": "vite",
+    "dev:backend": "cd backend && npm start",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "test:unit": "vitest",
+    "test:e2e": "cypress open"
+  },
+  "dependencies": {
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5",
+    "pinia": "^2.1.7",
+    "axios": "^1.6.5",
+    "vue-i18n": "^9.9.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.3",
+    "vite": "^5.0.11",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
+    "sass": "^1.70.0",
+    "vitest": "^1.2.0",
+    "cypress": "^13.6.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.20.1",
+    "concurrently": "^8.2.2"
+  }
+}
