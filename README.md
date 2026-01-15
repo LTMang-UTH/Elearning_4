@@ -21,31 +21,18 @@ npm run dev
 
 ### 1. Trang Chủ / Home Page
 ![Trang chủ](./src/assets/images/demo1%20(1).png)
-*Giao diện trang chủ với danh sách bài viết mới nhất*
+### 2. Đăng Ký
+![Đăng ký](./src/assets/images/demo1%20(4).png)
 
-### 2. Dashboard
-![Dashboard](./src/assets/images/demo1%20(2).png)
-*Dashboard quản lý bài viết*
-
-### 3. Blog List
+### 2. Trang người dùng sau khi đăng nhập
+![](./src/assets/images/demo1%20(2).png)
+### 3. Đăng nhập
+![Đăng nhập](./src/assets/images/demo1%20(6).png)
+### 4. Dashboard
+![Dashboard](./src/assets/images/demo1%20(5).png)
+### 5. Blog List
 ![Blog List](./src/assets/images/demo1%20(3).png)
-*Danh sách blog với tính năng tìm kiếm và lọc*
 
-### 4. Blog Detail
-![Blog Detail](./src/assets/images/demo1%20(4).png)
-*Trang chi tiết bài viết*
-
-### 5. Create/Edit Blog
-![Create Blog](./src/assets/images/demo1%20(5).png)
-*Form tạo và chỉnh sửa bài viết*
-
-### 6. User Profile
-![Profile](./src/assets/images/demo1%20(6).png)
-*Trang thông tin người dùng*
-
-### 7. Additional Screenshots
-![Demo 5](./src/assets/images/demo5.png)
-*Giao diện bổ sung*
 
 ### 8. Sample Images
 <table>
