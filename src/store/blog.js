@@ -211,10 +211,14 @@ export const useBlogStore = defineStore('blog', () => {
       const response = await blogAPI.getPopularBlogs(limit)
 
       if (response.success) {
-        popularBlogs.value = response.data
+        popularBlogs.value = response.data || []
         return { success: true, data: response.data }
       }
+      popularBlogs.value = []
+      return { success: false, message: 'Failed to fetch popular blogs' }
     } catch (err) {
+      popularBlogs.value = []
+      console.error('Error fetching popular blogs:', err)
       return { success: false, message: err.message }
     }
   }
@@ -224,10 +228,14 @@ export const useBlogStore = defineStore('blog', () => {
       const response = await blogAPI.getLatestBlogs(limit)
 
       if (response.success) {
-        latestBlogs.value = response.data
+        latestBlogs.value = response.data || []
         return { success: true, data: response.data }
       }
+      latestBlogs.value = []
+      return { success: false, message: 'Failed to fetch latest blogs' }
     } catch (err) {
+      latestBlogs.value = []
+      console.error('Error fetching latest blogs:', err)
       return { success: false, message: err.message }
     }
   }

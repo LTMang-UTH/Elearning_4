@@ -96,14 +96,19 @@ const formatDate = (date) => {
 }
 
 const fetchBlogs = async (params = {}) => {
-  loading.value = true
-  await blogStore.fetchBlogs({
-    page: 1,
-    limit: 12,
-    sortBy: sortBy.value,
-    ...params
-  })
-  loading.value = false
+  try {
+    loading.value = true
+    await blogStore.fetchBlogs({
+      page: 1,
+      limit: 12,
+      sortBy: sortBy.value,
+      ...params
+    })
+  } catch (error) {
+    console.error('Error fetching blogs:', error)
+  } finally {
+    loading.value = false
+  }
 }
 
 const handleSearch = () => {

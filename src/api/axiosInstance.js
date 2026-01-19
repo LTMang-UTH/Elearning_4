@@ -50,10 +50,23 @@ axiosInstance.interceptors.response.use(
     }
     
     // Chuẩn hóa response
+    const responseData = response.data
+    
+    // Nếu backend trả về {success: true, data: ...}
+    if (responseData.success !== undefined && responseData.data !== undefined) {
+      return {
+        success: responseData.success,
+        data: responseData.data,
+        message: responseData.message || 'Success',
+        statusCode: response.status
+      }
+    }
+    
+    // Nếu backend chỉ trả về data trực tiếp
     return {
       success: true,
-      data: response.data.data || response.data,
-      message: response.data.message || 'Success',
+      data: responseData,
+      message: 'Success',
       statusCode: response.status
     }
   },
@@ -96,6 +109,12 @@ axiosInstance.interceptors.response.use(
     // Xử lý lỗi 500 (Server Error)
     if (error.response?.status === 500) {
       errorResponse.message = 'Internal server error. Please try again later.'
+    }
+    
+    // Xử lý lỗi network (không kết nối được server/database)
+    if (error.code === 'ERR_NETWORK' || !error.response) {
+      errorResponse.message = 'Cannot connect to server. Please check your connection or try again later.'
+      errorResponse.statusCode = 0
     }
     
     return Promise.reject(errorResponse)

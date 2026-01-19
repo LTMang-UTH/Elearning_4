@@ -62,7 +62,18 @@
           </RouterLink>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div v-if="loading" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <p class="text-gray-500 mt-4">Đang tải...</p>
+        </div>
+        
+        <div v-else-if="popularBlogs.length === 0" class="text-center py-12 bg-gray-50 rounded-2xl">
+          <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+          <p class="text-gray-500 text-lg">Chưa có bài viết nào</p>
+          <p class="text-gray-400 text-sm mt-2">Hãy tạo bài viết đầu tiên của bạn!</p>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div v-for="blog in popularBlogs" :key="blog.id" class="blog-card-modern group">
             <div class="card-image-wrapper">
               <img :src="blog.image || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800'" 
@@ -121,7 +132,17 @@
           <p class="text-gray-600 mt-2">Nội dung mới nhất từ các tác giả</p>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div v-if="loading" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+          <p class="text-gray-500 mt-4">Đang tải...</p>
+        </div>
+        
+        <div v-else-if="latestBlogs.length === 0" class="text-center py-12 bg-gray-50 rounded-2xl">
+          <i class="fas fa-file-alt text-6xl text-gray-300 mb-4"></i>
+          <p class="text-gray-500 text-lg">Chưa có bài viết mới</p>
+        </div>
+        
+        <div v-else class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div v-for="blog in latestBlogs" :key="blog.id" class="latest-blog-card group">
             <div class="flex gap-5">
               <div class="latest-image-wrapper">
@@ -177,13 +198,39 @@ const blogStore = useBlogStore()
 
 const popularBlogs = ref([])
 const latestBlogs = ref([])
+const loading = ref(true)
+const error = ref(null)
 
 onMounted(async () => {
-  await blogStore.fetchPopularBlogs(6)
-  await blogStore.fetchLatestBlogs(5)
-  
-  popularBlogs.value = blogStore.popularBlogs
-  latestBlogs.value = blogStore.latestBlogs
+  try {
+    loading.value = true
+    error.value = null
+    
+    const [popularResult, latestResult] = await Promise.all([
+      blogStore.fetchPopularBlogs(6),
+      blogStore.fetchLatestBlogs(5)
+    ])
+    
+    // Chỉ set data nếu API trả về thành công và có data hợp lệ
+    if (popularResult && popularResult.success && Array.isArray(blogStore.popularBlogs)) {
+      popularBlogs.value = blogStore.popularBlogs.filter(blog => blog && blog.id)
+    } else {
+      popularBlogs.value = []
+    }
+    
+    if (latestResult && latestResult.success && Array.isArray(blogStore.latestBlogs)) {
+      latestBlogs.value = blogStore.latestBlogs.filter(blog => blog && blog.id)
+    } else {
+      latestBlogs.value = []
+    }
+  } catch (err) {
+    console.error('Error loading blogs:', err)
+    error.value = err.message || 'Không thể tải dữ liệu. Vui lòng kiểm tra kết nối database.'
+    popularBlogs.value = []
+    latestBlogs.value = []
+  } finally {
+    loading.value = false
+  }
 })
 </script>
 

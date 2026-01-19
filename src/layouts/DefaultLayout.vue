@@ -2,9 +2,7 @@
   <div class="default-layout">
     <Header />
     <main class="main-content">
-      <div class="container mx-auto px-4 py-8">
-        <slot />
-      </div>
+      <slot />
     </main>
     <Footer />
   </div>

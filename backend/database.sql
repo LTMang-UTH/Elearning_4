@@ -1,25 +1,15 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jan 15, 2026 at 04:01 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
+SET FOREIGN_KEY_CHECKS = 0;
+START TRANSACTION;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE DATABASE IF NOT EXISTS `vue3_blog`
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 
---
--- Database: `vue3_blog`
---
+USE `vue3_blog`;
+
 
 -- --------------------------------------------------------
 
@@ -191,9 +181,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `avatar`, `phone`, `bio`, `role`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Admin User', 'admin@gmail.com', '$2a$10$SXorTDCoBmyYtTZ1NvPntuvJAdyp1f1ZWPNyrKeA1f6IZjjkrsjyq', 'https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff&size=200', NULL, 'System Administrator', 'admin', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26'),
-(2, 'Thanh Nhung', 'nhung@gmail.com', '$2a$10$juXBdeaJlenu1aS./37HnO1xoErEdLXAzOziLCEbhCKmH7.2cQ0T6', 'https://ui-avatars.com/api/?name=Thanh+Nhung&background=6366F1&color=fff&size=200', NULL, 'Web Developer and Tech Enthusiast', 'user', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26'),
-(3, 'Bích My', 'my@gmail.com', '$2a$10$QrMdPK1m1Tv9YM/6sQoE9uxtOA2Qx6anTIVEDm.8Q7ONSgESqR6CG', 'https://ui-avatars.com/api/?name=Bich+My&background=EC4899&color=fff&size=200', NULL, 'UI/UX Designer', 'user', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26');
+(1, 'Admin User', 'admin@gmail.com', '$2b$10$AcSOuuOIoZmz0qceAIZWc.sBu6VWwu9mj/cwN1mHY6XKen6iVIIpy', 'https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff&size=200', NULL, 'System Administrator', 'admin', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26'),
+(2, 'Thanh Nhung', 'nhung@gmail.com', '$2b$10$4pBrtbrt5ilXae4ZM5WO1ePSmOqxvY8sE.r2EucW/uNGOa1tBzByS', 'https://ui-avatars.com/api/?name=Thanh+Nhung&background=6366F1&color=fff&size=200', NULL, 'Web Developer and Tech Enthusiast', 'user', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26'),
+(3, 'Bích My', 'my@gmail.com', '$2b$10$NvcjmlSSrP8UBAVRI80kOeWqiFc.Efz.e8oHvLDnMDF.CDwleST02', 'https://ui-avatars.com/api/?name=Bich+My&background=EC4899&color=fff&size=200', NULL, 'UI/UX Designer', 'user', 'active', '2026-01-15 12:28:26', '2026-01-15 12:28:26');
 
 --
 -- Indexes for dumped tables
