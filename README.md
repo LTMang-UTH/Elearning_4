@@ -6,10 +6,14 @@
 
 ```bash
 # 1. Setup Database
-Khởi động xampp
-chạy phpadmin
-tạo vue3_blog
-import database.sql
+Khởi động XAMPP và bật Apache, MySQL
+
+Truy cập: http://localhost/phpmyadmin
+
+Tạo database mới với tên: vue3_blog
+
+Import file database.sql vào database vừa tạo
+
 # 2. Cài đặt dependencies
 npm install
 
@@ -121,9 +125,9 @@ Elearning_4/
 ### 1. Trang Chủ / Home Page
 ![Trang chủ](./src/assets/images/demo1.png)
 ### 2. Đăng Ký
-![Đăng ký](./src/assets/images/demo2png)
+![Đăng ký](./src/assets/images/demo3.png)
 ### 3. Đăng nhập
-![Đăng nhập](./src/assets/images/demo3.png)
+![Đăng nhập](./src/assets/images/demo2.png)
 ### 4. Trang người dùng sau khi đăng nhập
 ![](./src/assets/images/demo4.png)
 ### 5. Dashboard
