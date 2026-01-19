@@ -48,7 +48,8 @@ Elearning_4/
 │   ├── server.js                        # File khởi động server Express
 │   ├── package.json                     # Dependencies Backend
 │   └── .env                             # ✅ Biến môi trường Backend (QUAN TRỌNG)
-│
+│── 📂 Postman/  
+|   ├── Vue3_Blog_API.postman_collection.json/  
 ├── 📂 src/                              # Frontend (Vue 3)
 │   ├── 📂 api/                          # API Service Layer
 │   │   ├── axiosInstance.js             # ✅ Cấu hình Axios (Request/Response Interceptor)
