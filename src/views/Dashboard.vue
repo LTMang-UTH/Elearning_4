@@ -160,18 +160,31 @@ const stats = ref({
 
 const recentBlogs = ref([])
 
+import * as blogAPI from '@/api/blog'
+
 const loadDashboardData = async () => {
   loading.value = true
   try {
-    // Load blogs
-    await blogStore.fetchBlogs({ limit: 10, sort: 'createdAt' })
+    // Load blogs (chỉ lấy trang đầu để hiển thị gần đây)
+    await blogStore.fetchBlogs({ sort: 'createdAt', status: undefined })
     recentBlogs.value = blogStore.blogs
 
-    // Calculate stats
-    stats.value.totalBlogs = blogStore.blogs.length
-    stats.value.publishedBlogs = blogStore.blogs.filter(b => b.status === 'published').length
-    stats.value.totalViews = blogStore.blogs.reduce((sum, b) => sum + (b.views || 0), 0)
-    
+    // Lấy thống kê tổng hợp từ API mới
+    const statsRes = await blogAPI.getBlogStats()
+    console.log('Blog Stats API:', statsRes)
+    if (statsRes && (statsRes.totalBlogs !== undefined || statsRes.publishedBlogs !== undefined || statsRes.totalViews !== undefined)) {
+      stats.value = {
+        ...stats.value,
+        ...statsRes
+      }
+      stats.value.totalBlogs = Number(stats.value.totalBlogs) || 0
+      stats.value.publishedBlogs = Number(stats.value.publishedBlogs) || 0
+      stats.value.totalViews = Number(stats.value.totalViews) || 0
+    } else {
+      stats.value.totalBlogs = 0
+      stats.value.publishedBlogs = 0
+      stats.value.totalViews = 0
+    }
     // Mock total users (cần API thực tế)
     stats.value.totalUsers = 3
   } catch (error) {

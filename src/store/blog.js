@@ -195,9 +195,26 @@ export const useBlogStore = defineStore('blog', () => {
       const response = await blogAPI.getMyBlogs(params)
 
       if (response.success) {
-        myBlogs.value = response.data.blogs || response.data.data || response.data
+        blogs.value = response.data.blogs || response.data.data || response.data
+        // Lấy đúng pagination từ response.data.pagination nếu có
+        if (response.data.pagination) {
+          pagination.value = {
+            page: response.data.pagination.page || params.page || 1,
+            limit: response.data.pagination.limit || params.limit || 10,
+            total: response.data.pagination.total || 0,
+            totalPages: response.data.pagination.totalPages || 0
+          }
+        } else {
+          pagination.value = {
+            page: response.data.page || params.page || 1,
+            limit: response.data.limit || params.limit || 10,
+            total: response.data.total || 0,
+            totalPages: response.data.totalPages || 0
+          }
+        }
         return { success: true, data: response.data }
       }
+      return { success: false, message: 'Failed to fetch my blogs' }
     } catch (err) {
       error.value = err.message
       return { success: false, message: err.message }

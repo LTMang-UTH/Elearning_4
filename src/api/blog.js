@@ -1,3 +1,12 @@
+// Lấy thống kê tổng hợp blog (Public API)
+export const getBlogStats = async () => {
+  try {
+    const response = await axiosInstance.get('/blogs/stats')
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
 import axiosInstance from './axiosInstance'
 
 /**
@@ -16,9 +25,9 @@ export const getBlogs = async (params = {}) => {
       sortBy = 'createdAt',
       sortOrder = 'desc',
       category = '',
-      status = 'published'
+      status // không gán mặc định
     } = params
-    
+
     const response = await axiosInstance.get('/blogs', {
       params: {
         page,
@@ -30,7 +39,7 @@ export const getBlogs = async (params = {}) => {
         status
       }
     })
-    
+
     return response
   } catch (error) {
     throw error

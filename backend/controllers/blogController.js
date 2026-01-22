@@ -1,3 +1,34 @@
+// Get blog statistics (total, published, views)
+export const getBlogStats = async (req, res) => {
+  try {
+    // Tổng số bài viết
+    const [totalResult] = await db.query('SELECT COUNT(*) as total FROM blogs')
+    const totalBlogs = totalResult[0].total
+
+    // Tổng số bài đã xuất bản
+    const [publishedResult] = await db.query("SELECT COUNT(*) as published FROM blogs WHERE status = 'published'")
+    const publishedBlogs = publishedResult[0].published
+
+    // Tổng lượt xem
+    const [viewsResult] = await db.query('SELECT SUM(views) as totalViews FROM blogs')
+    const totalViews = viewsResult[0].totalViews || 0
+
+    res.json({
+      success: true,
+      data: {
+        totalBlogs,
+        publishedBlogs,
+        totalViews
+      }
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    })
+  }
+}
 import { validationResult } from 'express-validator'
 import db from '../config/database.js'
 
@@ -18,6 +49,7 @@ function createSlug(title) {
 // Get all blogs
 export const getBlogs = async (req, res) => {
   try {
+
     const {
       page = 1,
       limit = 10,
@@ -28,6 +60,16 @@ export const getBlogs = async (req, res) => {
       status = 'published'
     } = req.query
 
+    // Map sortBy from frontend to DB column
+    const sortByMap = {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+      views: 'views',
+      title: 'title',
+      // add more if needed
+    }
+    const sortByDb = sortByMap[sortBy] || 'created_at'
+
     const offset = (page - 1) * limit
 
     let query = `
@@ -35,39 +77,41 @@ export const getBlogs = async (req, res) => {
       FROM blogs b
       LEFT JOIN users u ON b.author_id = u.id
       LEFT JOIN categories c ON b.category_id = c.id
-      WHERE b.status = ?
+      WHERE 1=1
     `
-    const params = [status]
+    const params = []
 
+    if (status && status !== '' && status !== undefined) {
+      query += ' AND b.status = ?'
+      params.push(status)
+    }
     if (search) {
-      query += ' AND (b.title LIKE ? OR b.content LIKE ?)'
+      query += ' AND (b.title LIKE ? OR b.content LIKE ?)' 
       params.push(`%${search}%`, `%${search}%`)
     }
-
     if (category) {
       query += ' AND b.category_id = ?'
       params.push(category)
     }
-
-    query += ` ORDER BY b.${sortBy} ${sortOrder} LIMIT ? OFFSET ?`
+    query += ` ORDER BY b.${sortByDb} ${sortOrder} LIMIT ? OFFSET ?`
     params.push(parseInt(limit), offset)
-
     const [blogs] = await db.query(query, params)
 
     // Get total count
-    let countQuery = 'SELECT COUNT(*) as total FROM blogs WHERE status = ?'
-    const countParams = [status]
-    
+    let countQuery = 'SELECT COUNT(*) as total FROM blogs WHERE 1=1'
+    const countParams = []
+    if (status && status !== '' && status !== undefined) {
+      countQuery += ' AND status = ?'
+      countParams.push(status)
+    }
     if (search) {
-      countQuery += ' AND (title LIKE ? OR content LIKE ?)'
+      countQuery += ' AND (title LIKE ? OR content LIKE ?)' 
       countParams.push(`%${search}%`, `%${search}%`)
     }
-    
     if (category) {
       countQuery += ' AND category_id = ?'
       countParams.push(category)
     }
-
     const [countResult] = await db.query(countQuery, countParams)
     const total = countResult[0].total
 

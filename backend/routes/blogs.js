@@ -8,6 +8,7 @@ const router = express.Router()
 
 // Public routes
 router.get('/', blogController.getBlogs)
+router.get('/stats', blogController.getBlogStats)
 router.get('/popular', blogController.getPopularBlogs)
 router.get('/latest', blogController.getLatestBlogs)
 router.get('/search', blogController.searchBlogs)
